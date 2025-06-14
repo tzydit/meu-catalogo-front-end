@@ -182,7 +182,7 @@
     <div class="flex items-center gap-2">
       <span class="text-2xl font-bold text-pink-400">🎬 MeuCatálogo</span>
     </div>
-    <nav class="flex gap-4">
+    <nav class="hidden md:flex gap-4">
       <a
         routerLink="/"
         routerLinkActive="text-pink-400"
@@ -195,7 +195,87 @@
         class="text-gray-200 hover:text-pink-400 transition"
         >Favoritos</a
       >
+      <a
+        *ngIf="auth.isLoggedIn"
+        routerLink="/profile"
+        routerLinkActive="text-pink-400"
+        class="text-gray-200 hover:text-pink-400 transition"
+        >Perfil</a
+      >
+      <a
+        *ngIf="!auth.isLoggedIn"
+        routerLink="/login"
+        routerLinkActive="text-pink-400"
+        class="text-pink-400 font-semibold border border-pink-400 px-3 py-1 rounded hover:bg-pink-500 hover:text-white transition"
+        >Login</a
+      >
+      <button
+        *ngIf="auth.isLoggedIn"
+        (click)="auth.logout(); menuOpen = false"
+        class="text-gray-400 hover:text-pink-400 transition ml-2"
+      >
+        Sair
+      </button>
     </nav>
+    <div class="md:hidden relative">
+      <button
+        (click)="menuOpen = !menuOpen"
+        aria-label="Abrir menu"
+        class="text-gray-200 focus:outline-none"
+      >
+        <svg
+          class="w-7 h-7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+      <div
+        *ngIf="menuOpen"
+        class="absolute right-0 top-12 bg-gray-900 dark:bg-gray-950 rounded shadow-lg py-2 px-4 flex flex-col gap-2 min-w-[140px] border border-gray-800 animate-fade-in"
+      >
+        <a
+          routerLink="/"
+          (click)="menuOpen = false"
+          class="text-gray-200 hover:text-pink-400 transition"
+          >Início</a
+        >
+        <a
+          routerLink="/favorites"
+          (click)="menuOpen = false"
+          class="text-gray-200 hover:text-pink-400 transition"
+          >Favoritos</a
+        >
+        <a
+          *ngIf="auth.isLoggedIn"
+          routerLink="/profile"
+          (click)="menuOpen = false"
+          class="text-gray-200 hover:text-pink-400 transition"
+          >Perfil</a
+        >
+        <a
+          *ngIf="!auth.isLoggedIn"
+          routerLink="/login"
+          (click)="menuOpen = false"
+          class="text-pink-400 font-semibold border border-pink-400 px-3 py-1 rounded hover:bg-pink-500 hover:text-white transition"
+          >Login</a
+        >
+        <button
+          *ngIf="auth.isLoggedIn"
+          (click)="auth.logout(); menuOpen = false"
+          class="text-gray-400 hover:text-pink-400 transition text-left"
+        >
+          Sair
+        </button>
+      </div>
+    </div>
   </div>
 </header>
 <main class="pt-20 pb-16 min-h-screen bg-gray-950 dark:bg-gray-950 text-gray-100">
@@ -217,5 +297,3 @@
 <!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-
-<router-outlet />
